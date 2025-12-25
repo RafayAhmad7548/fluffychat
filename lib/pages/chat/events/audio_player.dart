@@ -202,6 +202,12 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
 
     final audioPlayer = matrix.audioPlayer = AudioPlayer();
 
+    audioPlayer.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        audioPlayer.stop();
+      }
+    });
+
     if (file != null) {
       audioPlayer.setFilePath(file.path);
     } else {
