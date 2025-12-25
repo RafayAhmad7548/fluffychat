@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/event_extension.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/blur_hash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,16 +27,7 @@ class EventVideoPlayerState extends State<EventVideoPlayer> {
 
   double? _downloadProgress;
 
-  // The video_player package only doesn't support Windows and Linux.
-  final _supportsVideoPlayer =
-      !PlatformInfos.isWindows && !PlatformInfos.isLinux;
-
   Future<void> _downloadAction() async {
-    if (!_supportsVideoPlayer) {
-      widget.event.saveFile(context);
-      return;
-    }
-
     try {
       final fileSize = widget.event.content
           .tryGetMap<String, Object?>('info')

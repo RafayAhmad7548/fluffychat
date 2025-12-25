@@ -29,9 +29,6 @@ abstract class PlatformInfos {
 
   static bool get usesTouchscreen => !isMobile;
 
-  static bool get supportsVideoPlayer =>
-      !PlatformInfos.isWindows && !PlatformInfos.isLinux;
-
   static bool get supportsCustomImageResizer =>
       PlatformInfos.isWeb || PlatformInfos.isMobile;
 

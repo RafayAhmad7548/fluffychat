@@ -53,7 +53,7 @@ dependencies:
   matrix: ^6.2.0
   linkify: ^5.0.0
   media_kit_libs_linux: ^1.2.1
-  media_kit_libs_windows_audio: ^1.0.9
+  media_kit_libs_windows_video: ^1.0.11
   mime: ^2.0.0
   native_imaging: ^0.4.0
   opus_caf_converter_dart: ^1.0.1
@@ -83,6 +83,7 @@ dependencies:
   video_player: ^2.11.1
   wakelock_plus: ^1.5.1
   webrtc_interface: ^1.5.1
+  video_player_media_kit: ^2.0.0
 
 dev_dependencies:
   dart_code_linter: ^4.0.2

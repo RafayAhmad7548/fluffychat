@@ -13,7 +13,7 @@ import 'package:flutter_vodozemac/flutter_vodozemac.dart' as vod;
 import 'package:matrix/matrix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/universal_html.dart' as web;
-
+import 'package:video_player_media_kit/video_player_media_kit.dart';
 import 'config/setting_keys.dart';
 import 'utils/background_push.dart';
 import 'widgets/fluffy_chat_app.dart';
@@ -77,6 +77,14 @@ void main() async {
       '${AppSettings.applicationName.value} started in background-fetch mode. No GUI will be created unless the app is no longer detached.',
     );
     return;
+  }
+
+  // Initialize Media Kit Video Player for Desktop
+  if (PlatformInfos.isLinux || PlatformInfos.isWindows) {
+    VideoPlayerMediaKit.ensureInitialized(
+      linux: true,
+      windows: true,
+    );
   }
 
   // Started in foreground mode.
