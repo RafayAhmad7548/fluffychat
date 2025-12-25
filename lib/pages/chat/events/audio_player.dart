@@ -52,6 +52,8 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
   List<int>? _waveform;
   String? _durationString;
 
+  StreamSubscription? _playerStateSubscription;
+
   @override
   void dispose() {
     super.dispose();
@@ -97,6 +99,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
               actions: [
                 IconButton(
                   onPressed: () {
+                    _playerStateSubscription?.cancel();
                     audioPlayer.pause();
                     audioPlayer.dispose();
                     matrix.voiceMessageEventId.value = matrix.audioPlayer =
@@ -116,6 +119,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
         });
         return;
       }
+      _playerStateSubscription?.cancel();
       audioPlayer.pause();
       audioPlayer.dispose();
       matrix.voiceMessageEventId.value = matrix.audioPlayer = null;
@@ -139,6 +143,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
       return;
     }
 
+    _playerStateSubscription?.cancel();
     matrix.voiceMessageEventId.value = widget.event.eventId;
     matrix.audioPlayer
       ?..stop()
@@ -199,6 +204,12 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
     if (matrix.voiceMessageEventId.value != widget.event.eventId) return;
 
     final audioPlayer = matrix.audioPlayer = AudioPlayer();
+
+    _playerStateSubscription = audioPlayer.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        audioPlayer.stop();
+      }
+    });
 
     if (file != null) {
       audioPlayer.setFilePath(file.path);

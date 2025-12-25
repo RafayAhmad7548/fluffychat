@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
 import 'package:provider/provider.dart';
@@ -60,52 +61,41 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   int _activeClient = -1;
   String? activeBundle;
 
-  SharedPreferences get store => widget.store;
-
   XFile? loginAvatar;
+
   String? loginUsername;
   bool? loginRegistrationSupported;
-
   BackgroundPush? backgroundPush;
-
-  Client get client {
-    if (_activeClient < 0 || _activeClient >= widget.clients.length) {
-      return currentBundle!.first!;
-    }
-    return widget.clients[_activeClient];
-  }
 
   VoipPlugin? voipPlugin;
 
-  bool get isMultiAccount => widget.clients.length > 1;
-
-  int getClientIndexByMatrixId(String matrixId) =>
-      widget.clients.indexWhere((client) => client.userID == matrixId);
-
   late String currentClientSecret;
+
   RequestTokenResponse? currentThreepidCreds;
 
-  void setActiveClient(Client? cl) {
-    final i = widget.clients.indexWhere((c) => c == cl);
-    if (i != -1) {
-      _activeClient = i;
-      // TODO: Multi-client VoiP support
-      createVoipPlugin();
-    } else {
-      Logs().w('Tried to set an unknown client ${cl!.userID} as active');
-    }
-  }
+  Client? _loginClientCandidate;
 
-  List<Client?>? get currentBundle {
-    if (!hasComplexBundles) {
-      return List.from(widget.clients);
-    }
-    final bundles = accountBundles;
-    if (bundles.containsKey(activeBundle)) {
-      return bundles[activeBundle];
-    }
-    return bundles.values.first;
-  }
+  AudioPlayer? audioPlayer;
+
+  final ValueNotifier<String?> voiceMessageEventId = ValueNotifier(null);
+  final onRoomKeyRequestSub = <String, StreamSubscription>{};
+
+  final onKeyVerificationRequestSub = <String, StreamSubscription>{};
+
+  final onNotification = <String, StreamSubscription>{};
+
+  final onLogoutSub = <String, StreamSubscription<LoginState>>{};
+
+  final onUiaRequest = <String, StreamSubscription<UiaRequest>>{};
+
+  String? _cachedPassword;
+
+  Timer? _cachedPasswordClearTimer;
+  final linuxNotifications = PlatformInfos.isLinux
+      ? NotificationsClient()
+      : null;
+
+  final Map<String, int> linuxNotificationIds = {};
 
   Map<String?, List<Client?>> get accountBundles {
     final resBundles = <String?, List<_AccountBundleWithClient>>{};
@@ -135,12 +125,120 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     );
   }
 
+  String? get activeRoomId {
+    final route = FluffyChatApp.router.routeInformationProvider.value.uri.path;
+    if (!route.startsWith('/rooms/')) return null;
+    return route.split('/')[2];
+  }
+  String? get cachedPassword => _cachedPassword;
+  set cachedPassword(String? p) {
+    Logs().d('Password cached');
+    _cachedPasswordClearTimer?.cancel();
+    _cachedPassword = p;
+    _cachedPasswordClearTimer = Timer(const Duration(minutes: 10), () {
+      _cachedPassword = null;
+      Logs().d('Cached Password cleared');
+    });
+  }
+  Client get client {
+    if (_activeClient < 0 || _activeClient >= widget.clients.length) {
+      return currentBundle!.first!;
+    }
+    return widget.clients[_activeClient];
+  }
+  List<Client?>? get currentBundle {
+    if (!hasComplexBundles) {
+      return List.from(widget.clients);
+    }
+    final bundles = accountBundles;
+    if (bundles.containsKey(activeBundle)) {
+      return bundles[activeBundle];
+    }
+    return bundles.values.first;
+  }
+
   bool get hasComplexBundles => accountBundles.values.any((v) => v.length > 1);
+  bool get isMultiAccount => widget.clients.length > 1;
 
-  Client? _loginClientCandidate;
+  SharedPreferences get store => widget.store;
 
-  AudioPlayer? audioPlayer;
-  final ValueNotifier<String?> voiceMessageEventId = ValueNotifier(null);
+  @override
+  Widget build(BuildContext context) {
+    return Provider(create: (_) => this, child: widget.child);
+  }
+
+  Future<void> createVoipPlugin() async {
+    if (!AppSettings.experimentalVoip.value) {
+      voipPlugin = null;
+      return;
+    }
+    voipPlugin = VoipPlugin(this);
+  }
+
+  Future<void> dehydrateAction(BuildContext context) async {
+    final l10n = L10n.of(context);
+    final response = await showOkCancelAlertDialog(
+      context: context,
+      isDestructive: true,
+      title: l10n.dehydrate,
+      message: l10n.dehydrateWarning,
+    );
+    if (response != OkCancelResult.ok) {
+      return;
+    }
+    if (!context.mounted) return;
+    final result = await showFutureLoadingDialog(
+      context: context,
+      future: client.exportDump,
+    );
+    final export = result.result;
+    if (export == null) return;
+
+    final exportBytes = Uint8List.fromList(const Utf8Codec().encode(export));
+
+    final exportFileName =
+        'fluffychat-export-${DateFormat(DateFormat.YEAR_MONTH_DAY).format(DateTime.now())}.fluffybackup';
+
+    final file = MatrixFile(bytes: exportBytes, name: exportFileName);
+    if (!context.mounted) return;
+    file.save(context);
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final foreground =
+        state != AppLifecycleState.inactive &&
+        state != AppLifecycleState.paused;
+    for (final client in widget.clients) {
+      client.syncPresence = state == AppLifecycleState.resumed
+          ? null
+          : PresenceType.unavailable;
+      if (PlatformInfos.isMobile) {
+        client.backgroundSync = foreground;
+        client.requestHistoryOnLimitedTimeline = !foreground;
+        Logs().v('Set background sync to', foreground);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
+    onRoomKeyRequestSub.values.map((s) => s.cancel());
+    onKeyVerificationRequestSub.values.map((s) => s.cancel());
+    onLogoutSub.values.map((s) => s.cancel());
+    onNotification.values.map((s) => s.cancel());
+
+    linuxNotifications?.close();
+
+    super.dispose();
+  }
+
+  Client? getClientByName(String name) =>
+      widget.clients.firstWhereOrNull((c) => c.clientName == name);
+
+  int getClientIndexByMatrixId(String matrixId) =>
+      widget.clients.indexWhere((client) => client.userID == matrixId);
 
   Future<Client> getLoginClient() async {
     if (widget.clients.isNotEmpty && !client.isLogged()) {
@@ -170,46 +268,77 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     return candidate;
   }
 
-  Client? getClientByName(String name) =>
-      widget.clients.firstWhereOrNull((c) => c.clientName == name);
+  void initMatrix() {
+    for (final c in widget.clients) {
+      _registerSubs(c.clientName);
+    }
 
-  final onRoomKeyRequestSub = <String, StreamSubscription>{};
-  final onKeyVerificationRequestSub = <String, StreamSubscription>{};
-  final onNotification = <String, StreamSubscription>{};
-  final onLogoutSub = <String, StreamSubscription<LoginState>>{};
-  final onUiaRequest = <String, StreamSubscription<UiaRequest>>{};
+    if (PlatformInfos.isMobile) {
+      backgroundPush = BackgroundPush(
+        this,
+        onFcmError: (errorMsg, {Uri? link}) async {
+          final result = await showOkCancelAlertDialog(
+            context:
+                FluffyChatApp
+                    .router
+                    .routerDelegate
+                    .navigatorKey
+                    .currentContext ??
+                context,
+            title: L10n.of(context).pushNotificationsNotAvailable,
+            message: errorMsg,
+            okLabel: link == null
+                ? L10n.of(context).ok
+                : L10n.of(context).learnMore,
+            cancelLabel: L10n.of(context).doNotShowAgain,
+          );
+          if (result == OkCancelResult.ok && link != null) {
+            launchUrlString(
+              link.toString(),
+              mode: LaunchMode.externalApplication,
+            );
+          }
+          if (result == OkCancelResult.cancel) {
+            await AppSettings.showNoGoogle.setItem(true);
+          }
+        },
+      );
+    }
 
-  String? _cachedPassword;
-  Timer? _cachedPasswordClearTimer;
-
-  String? get cachedPassword => _cachedPassword;
-
-  set cachedPassword(String? p) {
-    Logs().d('Password cached');
-    _cachedPasswordClearTimer?.cancel();
-    _cachedPassword = p;
-    _cachedPasswordClearTimer = Timer(const Duration(minutes: 10), () {
-      _cachedPassword = null;
-      Logs().d('Cached Password cleared');
-    });
+    createVoipPlugin();
   }
-
-  String? get activeRoomId {
-    final route = FluffyChatApp.router.routeInformationProvider.value.uri.path;
-    if (!route.startsWith('/rooms/')) return null;
-    return route.split('/')[2];
-  }
-
-  final linuxNotifications = PlatformInfos.isLinux
-      ? NotificationsClient()
-      : null;
-  final Map<String, int> linuxNotificationIds = {};
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    if (PlatformInfos.isLinux || PlatformInfos.isWindows) {
+      JustAudioMediaKit.ensureInitialized();
+      JustAudioMediaKit.title = AppSettings.applicationName.value;
+    }
     initMatrix();
+  }
+
+  void setActiveClient(Client? cl) {
+    final i = widget.clients.indexWhere((c) => c == cl);
+    if (i != -1) {
+      _activeClient = i;
+      // TODO: Multi-client VoiP support
+      createVoipPlugin();
+    } else {
+      Logs().w('Tried to set an unknown client ${cl!.userID} as active');
+    }
+  }
+
+  void _cancelSubs(String name) {
+    onRoomKeyRequestSub[name]?.cancel();
+    onRoomKeyRequestSub.remove(name);
+    onKeyVerificationRequestSub[name]?.cancel();
+    onKeyVerificationRequestSub.remove(name);
+    onLogoutSub[name]?.cancel();
+    onLogoutSub.remove(name);
+    onNotification[name]?.cancel();
+    onNotification.remove(name);
   }
 
   void _registerSubs(String name) {
@@ -291,130 +420,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         );
       });
     }
-  }
-
-  void _cancelSubs(String name) {
-    onRoomKeyRequestSub[name]?.cancel();
-    onRoomKeyRequestSub.remove(name);
-    onKeyVerificationRequestSub[name]?.cancel();
-    onKeyVerificationRequestSub.remove(name);
-    onLogoutSub[name]?.cancel();
-    onLogoutSub.remove(name);
-    onNotification[name]?.cancel();
-    onNotification.remove(name);
-  }
-
-  void initMatrix() {
-    for (final c in widget.clients) {
-      _registerSubs(c.clientName);
-    }
-
-    if (PlatformInfos.isMobile) {
-      backgroundPush = BackgroundPush(
-        this,
-        onFcmError: (errorMsg, {Uri? link}) async {
-          final result = await showOkCancelAlertDialog(
-            context:
-                FluffyChatApp
-                    .router
-                    .routerDelegate
-                    .navigatorKey
-                    .currentContext ??
-                context,
-            title: L10n.of(context).pushNotificationsNotAvailable,
-            message: errorMsg,
-            okLabel: link == null
-                ? L10n.of(context).ok
-                : L10n.of(context).learnMore,
-            cancelLabel: L10n.of(context).doNotShowAgain,
-          );
-          if (result == OkCancelResult.ok && link != null) {
-            launchUrlString(
-              link.toString(),
-              mode: LaunchMode.externalApplication,
-            );
-          }
-          if (result == OkCancelResult.cancel) {
-            await AppSettings.showNoGoogle.setItem(true);
-          }
-        },
-      );
-    }
-
-    createVoipPlugin();
-  }
-
-  Future<void> createVoipPlugin() async {
-    if (!AppSettings.experimentalVoip.value) {
-      voipPlugin = null;
-      return;
-    }
-    voipPlugin = VoipPlugin(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final foreground =
-        state != AppLifecycleState.inactive &&
-        state != AppLifecycleState.paused;
-    for (final client in widget.clients) {
-      client.syncPresence = state == AppLifecycleState.resumed
-          ? null
-          : PresenceType.unavailable;
-      if (PlatformInfos.isMobile) {
-        client.backgroundSync = foreground;
-        client.requestHistoryOnLimitedTimeline = !foreground;
-        Logs().v('Set background sync to', foreground);
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-
-    onRoomKeyRequestSub.values.map((s) => s.cancel());
-    onKeyVerificationRequestSub.values.map((s) => s.cancel());
-    onLogoutSub.values.map((s) => s.cancel());
-    onNotification.values.map((s) => s.cancel());
-
-    linuxNotifications?.close();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Provider(create: (_) => this, child: widget.child);
-  }
-
-  Future<void> dehydrateAction(BuildContext context) async {
-    final l10n = L10n.of(context);
-    final response = await showOkCancelAlertDialog(
-      context: context,
-      isDestructive: true,
-      title: l10n.dehydrate,
-      message: l10n.dehydrateWarning,
-    );
-    if (response != OkCancelResult.ok) {
-      return;
-    }
-    if (!context.mounted) return;
-    final result = await showFutureLoadingDialog(
-      context: context,
-      future: client.exportDump,
-    );
-    final export = result.result;
-    if (export == null) return;
-
-    final exportBytes = Uint8List.fromList(const Utf8Codec().encode(export));
-
-    final exportFileName =
-        'fluffychat-export-${DateFormat(DateFormat.YEAR_MONTH_DAY).format(DateTime.now())}.fluffybackup';
-
-    final file = MatrixFile(bytes: exportBytes, name: exportFileName);
-    if (!context.mounted) return;
-    file.save(context);
   }
 }
 

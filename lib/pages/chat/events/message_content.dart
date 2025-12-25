@@ -17,7 +17,6 @@ import 'package:matrix/matrix.dart';
 
 import '../../../config/app_config.dart';
 import '../../../utils/event_checkbox_extension.dart';
-import '../../../utils/platform_infos.dart';
 import '../../../utils/url_launcher.dart';
 import 'audio_player.dart';
 import 'cute_events.dart';
@@ -160,24 +159,11 @@ class MessageContent extends StatelessWidget {
           case CuteEventContent.eventType:
             return CuteContent(event);
           case MessageTypes.Audio:
-            if (PlatformInfos.isMobile ||
-                PlatformInfos.isMacOS ||
-                PlatformInfos.isWeb
-            // Disabled until https://github.com/bleonard252/just_audio_mpv/issues/3
-            // is fixed
-            //   || PlatformInfos.isLinux
-            ) {
-              return AudioPlayerWidget(
-                event,
-                color: textColor,
-                linkColor: linkColor,
-                fontSize: fontSize,
-              );
-            }
-            return MessageDownloadContent(
+            return AudioPlayerWidget(
               event,
-              textColor: textColor,
+              color: textColor,
               linkColor: linkColor,
+              fontSize: fontSize,
             );
           case MessageTypes.Video:
             return EventVideoPlayer(
