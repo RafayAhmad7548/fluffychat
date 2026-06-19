@@ -163,11 +163,13 @@ class BackgroundPush {
       //<GOOGLE_SERVICES>await firebase.requestPermission();
     }
     if (PlatformInfos.isAndroid && !isIntegrationTest) {
-      _flutterLocalNotificationsPlugin
+      final androidPlugin = 
+        _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
-          >()
-          ?.requestNotificationsPermission();
+          >();
+      androidPlugin?.requestNotificationsPermission();
+      androidPlugin?.requestFullScreenIntentPermission();
     }
     final appDisplayName = PlatformInfos.appDisplayName;
 
