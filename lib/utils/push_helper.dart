@@ -190,6 +190,11 @@ Future<void> _tryPushHelper(
     return;
   }
 
+  var isCallNotification = false;
+  if (event.type == EventTypes.CallInvite) {
+    isCallNotification = true;
+  }
+
   final matrixLocals = MatrixLocals(l10n);
 
   // Calculate the body
@@ -303,6 +308,7 @@ Future<void> _tryPushHelper(
     importance: Importance.high,
     priority: Priority.max,
     groupKey: client.clientName,
+    fullScreenIntent: isCallNotification,
     actions: event.type == EventTypes.RoomMember || !useNotificationActions
         ? null
         : <AndroidNotificationAction>[
