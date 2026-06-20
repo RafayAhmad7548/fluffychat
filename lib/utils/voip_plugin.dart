@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart' as webrtc_impl;
 import 'package:matrix/matrix.dart';
+import 'package:proximity_screen_lock/proximity_screen_lock.dart';
 import 'package:webrtc_interface/webrtc_interface.dart' hide Navigator;
 
 import '../../utils/voip/user_media_manager.dart';
@@ -101,6 +102,9 @@ class VoipPlugin with WidgetsBindingObserver implements WebRTCDelegate {
 
   @override
   Future<void> handleNewCall(CallSession call) async {
+    if (await ProximityScreenLock.isProximityLockSupported()) {
+      ProximityScreenLock.setActive(true);
+    }
     if (PlatformInfos.isAndroid) {
       try {
         final wasForeground = await FlutterForegroundTask.isAppOnForeground;
@@ -124,6 +128,9 @@ class VoipPlugin with WidgetsBindingObserver implements WebRTCDelegate {
 
   @override
   Future<void> handleCallEnded(CallSession session) async {
+    if (await ProximityScreenLock.isProximityLockSupported()) {
+      ProximityScreenLock.setActive(false);
+    }
     if (overlayEntry != null) {
       overlayEntry!.remove();
       overlayEntry = null;
