@@ -39,6 +39,7 @@ import 'package:fluffychat/widgets/share_scaffold_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:matrix/matrix.dart';
@@ -585,6 +586,10 @@ class ChatController extends State<ChatPageWithRoom>
         .then((_) {
           _setReadMarkerFuture = null;
         });
+    if (eventId == null || eventId == timeline.room.lastEvent?.eventId) {
+      final id = '${sendingClient.clientName}_$roomId'.hashCode;
+      FlutterLocalNotificationsPlugin().cancel(id: id);
+    }
   }
 
   @override
