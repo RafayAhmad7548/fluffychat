@@ -7,6 +7,7 @@ import 'dart:core';
 
 import 'package:fluffychat/pages/dialer/dialer.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/widgets/fluffy_chat_app.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -33,7 +34,6 @@ class VoipPlugin with WidgetsBindingObserver implements WebRTCDelegate {
   bool speakerOn = false;
   late VoIP voip;
   OverlayEntry? overlayEntry;
-  BuildContext? context;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState? state) {
@@ -43,9 +43,9 @@ class VoipPlugin with WidgetsBindingObserver implements WebRTCDelegate {
   }
 
   void addCallingOverlay(String callId, CallSession call) {
-    final context = this.context;
-    if (context == null || !context.mounted) {
-      throw ('addCallingOverlay because of missing context', context);
+    final overlayState = FluffyChatApp.router.routerDelegate.navigatorKey.currentState?.overlay;
+    if (overlayState == null) {
+      throw ('addCallingOverlay because of missing overlayState', overlayState);
     }
 
     if (overlayEntry != null) {
@@ -55,7 +55,7 @@ class VoipPlugin with WidgetsBindingObserver implements WebRTCDelegate {
 
     overlayEntry = OverlayEntry(
       builder: (_) => Calling(
-        context: context,
+        context: FluffyChatApp.router.routerDelegate.navigatorKey.currentContext!,
         client: client,
         callId: callId,
         call: call,
@@ -65,7 +65,7 @@ class VoipPlugin with WidgetsBindingObserver implements WebRTCDelegate {
         },
       ),
     );
-    Overlay.of(context).insert(overlayEntry!);
+    overlayState.insert(overlayEntry!);
   }
 
   @override
