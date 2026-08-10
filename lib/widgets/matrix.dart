@@ -64,7 +64,7 @@ class Matrix extends StatefulWidget {
 }
 
 class MatrixState extends State<Matrix> with WidgetsBindingObserver {
-  int _activeClient = -1;
+  int _activeClient = 0;
   String? activeBundle;
 
   XFile? loginAvatar;
@@ -215,6 +215,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   void setActiveClient(Client? cl) {
     final i = widget.clients.indexWhere((c) => c == cl);
     if (i != -1) {
+      if (i == _activeClient && voipPlugin != null) return;
       _activeClient = i;
       // TODO: Multi-client VoiP support
       createVoipPlugin();
