@@ -3,5 +3,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-Future<void> applyWorkaroundToOpenSqlCipherOnOldAndroidVersions() =>
-    Future.value();
+import 'package:http/http.dart' as http;
+
+/// Default HTTP client for platforms without Cronet (e.g. web).
+http.Client createPlatformHttpClient() => http.Client();

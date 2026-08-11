@@ -5,6 +5,7 @@
 
 import 'package:file_picker/file_picker.dart';
 import 'package:fluffychat/l10n/l10n.dart';
+import 'package:fluffychat/utils/error_reporter.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:flutter/material.dart';
@@ -18,21 +19,27 @@ import 'bootstrap_state.dart';
 
 class BootstrapViewModel extends ValueNotifier<BootstrapViewModelState> {
   final Client client;
+  final bool reset;
 
   final TextEditingController enterPassphraseOrRecovController =
       TextEditingController();
   final TextEditingController newPassphraseController = TextEditingController();
   final TextEditingController repeatPassphraseController =
       TextEditingController();
+  final ScrollController devicesScrollController = ScrollController();
 
-  BootstrapViewModel({required this.client})
-    : super(BootstrapViewModelState()) {
+  BootstrapViewModel({required this.client, required this.reset})
+    : super(BootstrapViewModelState()..reset = reset) {
     _init();
   }
 
   @override
   void dispose() {
     _cancelKeyVerification();
+    enterPassphraseOrRecovController.dispose();
+    newPassphraseController.dispose();
+    repeatPassphraseController.dispose();
+    devicesScrollController.dispose();
     super.dispose();
   }
 
@@ -87,11 +94,15 @@ class BootstrapViewModel extends ValueNotifier<BootstrapViewModelState> {
         value.keyVerification?.onUpdate = _onKeyVerificationUpdate;
       }
       if (supportsSecureStorage) {
-        final keyFromSecureStorage = await FlutterSecureStorage().read(
-          key: _secureStorageKey,
-        );
-        if (keyFromSecureStorage != null) {
-          enterPassphraseOrRecovController.text = keyFromSecureStorage;
+        try {
+          final keyFromSecureStorage = await FlutterSecureStorage().read(
+            key: _secureStorageKey,
+          );
+          if (keyFromSecureStorage != null) {
+            enterPassphraseOrRecovController.text = keyFromSecureStorage;
+          }
+        } catch (e, s) {
+          Logs().e('Unable to read key from secure storage', e, s);
         }
       }
     }
@@ -132,11 +143,33 @@ class BootstrapViewModel extends ValueNotifier<BootstrapViewModelState> {
     notifyListeners();
   }
 
-  Future<void> setOrSkipPassphrase(String? passphrase) async {
+  Future<void> setOrSkipPassphrase(
+    String? passphrase,
+    BuildContext context,
+  ) async {
     value.isLoading = true;
     notifyListeners();
-
-    value.recoveryKey = await client.initCryptoIdentity(passphrase: passphrase);
+    try {
+      value.recoveryKey = await client.initCryptoIdentity(
+        passphrase: passphrase,
+        wipeCrossSigning: !reset,
+        wipeKeyBackup: !reset,
+        wipeSecureStorage: !reset,
+        setupMasterKey: !reset,
+        setupSelfSigningKey: !reset,
+        setupUserSigningKey: !reset,
+      );
+    } catch (e, s) {
+      if (!context.mounted) return;
+      ErrorReporter(
+        context,
+        'Unable to init crypto identity',
+      ).onErrorCallback(e, s);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toLocalizedString(context))));
+      value.isLoading = false;
+    }
     notifyListeners();
   }
 
@@ -151,6 +184,7 @@ class BootstrapViewModel extends ValueNotifier<BootstrapViewModelState> {
 
   bool get supportsSecureStorage =>
       PlatformInfos.isMobile || PlatformInfos.isDesktop;
+
   Future<void> unlock(BuildContext context) async {
     final key = enterPassphraseOrRecovController.text.trim();
     if (key.isEmpty) return;
@@ -167,13 +201,20 @@ class BootstrapViewModel extends ValueNotifier<BootstrapViewModelState> {
       notifyListeners();
       return;
     } catch (e, s) {
-      Logs().d('Unable to unlock', e, s);
+      if (e is! InvalidPassphraseException) {
+        const errorMessage = 'Unexpected error on unlock passphrase';
+        if (context.mounted) {
+          ErrorReporter(context, errorMessage).onErrorCallback(e, s);
+        } else {
+          Logs().wtf(errorMessage, e, s);
+        }
+      }
       value.isLoading = false;
       value.unlockWithError = e;
+      notifyListeners();
       if (supportsSecureStorage) {
         await FlutterSecureStorage().delete(key: _secureStorageKey);
       }
-      notifyListeners();
       return;
     }
   }

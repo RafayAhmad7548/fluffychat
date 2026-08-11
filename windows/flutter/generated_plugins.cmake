@@ -11,13 +11,13 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_secure_storage_windows
   flutter_webrtc
   geolocator_windows
+  local_auth_windows
   media_kit_libs_windows_video
   media_kit_video
   pasteboard
   record_windows
   screen_retriever_windows
   share_plus
-  sqlcipher_flutter_libs
   url_launcher_windows
   window_manager
   window_to_front

@@ -64,11 +64,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "allChats": "Kaikki keskustelut",
-    "@allChats": {
-        "type": "String",
-        "placeholders": {}
-    },
     "answeredTheCall": "{senderName} vastasi puheluun",
     "@answeredTheCall": {
         "type": "String",
@@ -177,18 +172,6 @@
         "type": "String",
         "placeholders": {
             "username": {
-                "type": "String"
-            }
-        }
-    },
-    "changedTheChatNameTo": "{username} asetti keskustelun nimeksi: '{chatname}'",
-    "@changedTheChatNameTo": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            },
-            "chatname": {
                 "type": "String"
             }
         }
@@ -305,18 +288,6 @@
         "type": "String",
         "placeholders": {
             "uri": {
-                "type": "String"
-            }
-        }
-    },
-    "changedTheChatDescriptionTo": "{username} asetti keskustelun kuvaukseksi: '{description}'",
-    "@changedTheChatDescriptionTo": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            },
-            "description": {
                 "type": "String"
             }
         }
@@ -466,16 +437,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "device": "Laite",
-    "@device": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "deviceId": "Laite-ID",
-    "@deviceId": {
-        "type": "String",
-        "placeholders": {}
-    },
     "devices": "Laitteet",
     "@devices": {
         "type": "String",
@@ -531,16 +492,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "emotePacks": "Huoneen emote-paketit",
-    "@emotePacks": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "emoteSettings": "Emote-asetukset",
-    "@emoteSettings": {
-        "type": "String",
-        "placeholders": {}
-    },
     "emoteShortcode": "Emote-lyhytkoodi",
     "@emoteShortcode": {
         "type": "String",
@@ -575,7 +526,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "homeserver": "Kotipalvelin",
     "errorObtainingLocation": "Virhe paikannuksessa: {error}",
     "@errorObtainingLocation": {
         "type": "String",
@@ -584,11 +534,6 @@
                 "type": "String"
             }
         }
-    },
-    "fileName": "Tiedostonimi",
-    "@fileName": {
-        "type": "String",
-        "placeholders": {}
     },
     "fromJoining": "Alkaen liittymisestä",
     "@fromJoining": {
@@ -651,18 +596,8 @@
         "type": "String",
         "placeholders": {}
     },
-    "hideRedactedEvents": "Piilota poistetut tapahtumat",
-    "@hideRedactedEvents": {
-        "type": "String",
-        "placeholders": {}
-    },
     "hideUnknownEvents": "Piilota tuntemattomat tapahtumat",
     "@hideUnknownEvents": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "id": "ID",
-    "@id": {
         "type": "String",
         "placeholders": {}
     },
@@ -884,11 +819,6 @@
         }
     },
     "scanQrCode": "Skannaa QR-koodi",
-    "none": "Ei yhtään",
-    "@none": {
-        "type": "String",
-        "placeholders": {}
-    },
     "noPasswordRecoveryDescription": "Et ole vielä lisännyt tapaa salasanasi palauttamiseksi.",
     "@noPasswordRecoveryDescription": {
         "type": "String",
@@ -918,18 +848,8 @@
         "type": "String",
         "placeholders": {}
     },
-    "offline": "Poissa verkosta",
-    "@offline": {
-        "type": "String",
-        "placeholders": {}
-    },
     "ok": "ok",
     "@ok": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "online": "Linjoilla",
-    "@online": {
         "type": "String",
         "placeholders": {}
     },
@@ -1105,11 +1025,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
-    "@fluffychat": {
-        "type": "String",
-        "placeholders": {}
-    },
     "iHaveClickedOnLink": "Olen klikannut linkkiä",
     "@iHaveClickedOnLink": {
         "type": "String",
@@ -1131,11 +1046,6 @@
     },
     "joinRoom": "Liity huoneeseen",
     "@joinRoom": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "needPantalaimonWarning": "Tiedäthän tarvitsevasi toistaiseksi Pantalaimonin käyttääksesi päästä-päähän-salausta.",
-    "@needPantalaimonWarning": {
         "type": "String",
         "placeholders": {}
     },
@@ -1215,24 +1125,10 @@
         "type": "String",
         "placeholders": {}
     },
-    "pickImage": "Valitse kuva",
-    "@pickImage": {
-        "type": "String",
-        "placeholders": {}
-    },
     "pin": "Kiinnitä",
     "@pin": {
         "type": "String",
         "placeholders": {}
-    },
-    "play": "Toista {fileName}",
-    "@play": {
-        "type": "String",
-        "placeholders": {
-            "fileName": {
-                "type": "String"
-            }
-        }
     },
     "pleaseChooseAPasscode": "Valitse pääsykoodi",
     "@pleaseChooseAPasscode": {
@@ -1241,11 +1137,6 @@
     },
     "pleaseClickOnLink": "Klikkaa linkkiä sähköpostissa ja sitten jatka.",
     "@pleaseClickOnLink": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "pleaseEnter4Digits": "Syötä 4 numeroa tai jätä tyhjäksi poistaaksesi sovelluksen lukituksen.",
-    "@pleaseEnter4Digits": {
         "type": "String",
         "placeholders": {}
     },
@@ -1269,11 +1160,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "recording": "Tallenne",
-    "@recording": {
-        "type": "String",
-        "placeholders": {}
-    },
     "redactedAnEvent": "{username} poisti tapahtuman",
     "@redactedAnEvent": {
         "type": "String",
@@ -1285,11 +1171,6 @@
     },
     "redactMessage": "Poista viesti",
     "@redactMessage": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "register": "Rekisteröidy",
-    "@register": {
         "type": "String",
         "placeholders": {}
     },
@@ -1316,15 +1197,6 @@
     "@removeAllOtherDevices": {
         "type": "String",
         "placeholders": {}
-    },
-    "removedBy": "Poistanut {username}",
-    "@removedBy": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            }
-        }
     },
     "unbanFromChat": "Poista porttikielto keskusteluun",
     "@unbanFromChat": {
@@ -1436,12 +1308,6 @@
     },
     "theyMatch": "Ne täsmäävät",
     "@theyMatch": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "title": "FluffyChat",
-    "@title": {
-        "description": "Title for the application",
         "type": "String",
         "placeholders": {}
     },
@@ -1642,8 +1508,6 @@
         "placeholders": {}
     },
     "removeFromSpace": "Poista tilasta",
-    "start": "Aloita",
-    "serverRequiresEmail": "Tämän palvelimen täytyy tarkistaa sähköposti-osoitteesi rekisteröitymistä varten.",
     "roomVersion": "Huoneen versio",
     "@roomVersion": {
         "type": "String",
@@ -1657,16 +1521,6 @@
                 "type": "String"
             }
         }
-    },
-    "unavailable": "Ei saatavilla",
-    "@unavailable": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "verify": "Varmista",
-    "@verify": {
-        "type": "String",
-        "placeholders": {}
     },
     "passphraseOrKey": "salalause tai palautusavain",
     "@passphraseOrKey": {
@@ -1727,11 +1581,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "requestPermission": "Pyydä lupaa",
-    "@requestPermission": {
-        "type": "String",
-        "placeholders": {}
-    },
     "saveFile": "Tallenna tiedosto",
     "@saveFile": {
         "type": "String",
@@ -1744,11 +1593,6 @@
     },
     "publicRooms": "Julkiset huoneet",
     "@publicRooms": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "pushRules": "Push-säännöt",
-    "@pushRules": {
         "type": "String",
         "placeholders": {}
     },
@@ -1799,11 +1643,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "showPassword": "Näytä salasana",
-    "@showPassword": {
-        "type": "String",
-        "placeholders": {}
-    },
     "statusExampleMessage": "Millainen on vointisi?",
     "@statusExampleMessage": {
         "type": "String",
@@ -1840,12 +1679,6 @@
         "placeholders": {}
     },
     "time": "Aika",
-    "messageType": "Viestin tyyppi",
-    "username": "Käyttäjätunnus",
-    "@username": {
-        "type": "String",
-        "placeholders": {}
-    },
     "writeAMessage": "Kirjoita viesti…",
     "@writeAMessage": {
         "type": "String",
@@ -1889,7 +1722,6 @@
         "description": "Usage hint for the command /discardsession"
     },
     "markAsRead": "Merkitse luetuksi",
-    "dismiss": "Hylkää",
     "emojis": "Hymiöt",
     "unsupportedAndroidVersionLong": "Tämä ominaisuus vaatii uudemman Android-version. Tarkistathan päivitykset tai Lineage OS :n tuki.",
     "unsupportedAndroidVersion": "Ei tuettu Android-versio",
@@ -1971,7 +1803,6 @@
             }
         }
     },
-    "recoveryKey": "Palautusavain",
     "hydrate": "Palauta varmuuskopiotiedostosta",
     "dehydrate": "Vie istunto ja tyhjennä laite",
     "dehydrateWarning": "Tätä toimenpidettä ei voi kumota. Varmista varmuuskopiotiedoston turvallinen tallennus.",
@@ -2003,12 +1834,7 @@
     "whyIsThisMessageEncrypted": "Miksei tätä viestiä voida lukea?",
     "noKeyForThisMessage": "Tämä voi tapahtua mikäli viesti lähetettiin ennen sisäänkirjautumistasi tälle laitteelle.\n\nOn myös mahdollista, että lähettäjä on estänyt tämän laitteen tai jokin meni pieleen verkkoyhteyden kanssa.\n\nPystytkö lukemaan viestin toisella istunnolla? Siinä tapauksessa voit siirtää viestin siltä! Mene Asetukset > Laitteet ja varmista, että laitteesi ovat varmistaneet toisensa. Seuraavankerran avatessasi huoneen ja molempien istuntojen ollessa etualalla, avaimet siirretään automaattisesti.\n\nHaluatko varmistaa ettet menetä avaimia uloskirjautuessa tai laitteita vaihtaessa? Varmista avainvarmuuskopion käytössäolo asetuksista.",
     "commandHint_markasdm": "Merkitse yksityiskeskusteluksi syötetyn Matrix IDn kanssa",
-    "foregroundServiceRunning": "Tämä ilmoitus näkyy etualapalvelun ollessa käynnissä.",
     "newSpace": "Uusi tila",
-    "allSpaces": "Kaikki tilat",
-    "screenSharingTitle": "ruudunjako",
-    "newGroup": "Uusi ryhmä",
-    "screenSharingDetail": "Jaat ruutuasi FluffyChatissä",
     "hugContent": "{senderName} halaa sinua",
     "@hugContent": {
         "type": "String",
@@ -2051,7 +1877,6 @@
     },
     "disableEncryptionWarning": "Turvallisuuden vuoksi et voi poistaa salausta käytöstä huoneista, joissa se on aiemmin otettu käyttöön.",
     "newSpaceDescription": "Tilat mahdollistavat keskusteluidesi keräämisen ja yksityisten tai julkisten yhteisöjen rakentamisen.",
-    "deviceKeys": "Laite-avaimet:",
     "reopenChat": "Avaa keskustelu uudelleen",
     "noOtherDevicesFound": "Muita laitteita ei löytynyt",
     "jumpToLastReadMessage": "Hyppää viimeiseen luettuun viestiin",
@@ -2115,7 +1940,6 @@
             }
         }
     },
-    "directChat": "Yksityiskeskustelu",
     "wrongPinEntered": "Väärä pin-koodi! Yritä uudelleen {seconds} sekuntin kuluttua...",
     "@wrongPinEntered": {
         "type": "String",
@@ -2147,10 +1971,6 @@
     "accessAndVisibility": "Pääsy ja näkyvyys",
     "unread": "Lukemattomat",
     "noMoreChatsFound": "Lisää keskusteluja ei löytynyt...",
-    "alwaysUse24HourFormat": "väärä",
-    "@alwaysUse24HourFormat": {
-        "description": "Set to true to always display time of day in 24 hour format."
-    },
     "select": "Valitse",
     "searchForUsers": "Etsi @users...",
     "pleaseEnterYourCurrentPassword": "Anna nykyinen salasanasi",
@@ -2163,7 +1983,6 @@
     "files": "Tiedostot",
     "changelog": "Muutosloki",
     "continueText": "Jatka",
-    "welcomeText": "Hei 👋, Tämä on FluffyChat. Voit kirjautua sisään mihin tahansa kotipalvelimeen, joka on yhteensopiva https:/matrix.org:in kanssa. Sitten jutellaan kenen kanssa tahansa. Se on hajautettu viestiverkosto!",
     "serverInformation": "Palvelimen tiedot:",
     "name": "Nimi",
     "version": "Versio",
@@ -2176,8 +1995,6 @@
     "approve": "Hyväksy",
     "pause": "Keskeytä",
     "resume": "Jatka",
-    "poll": "Kysely",
-    "ignoreUser": "Jätä huomiotta",
     "aboutHomeserver": "Tietoja {homeserver}:sta",
     "@aboutHomeserver": {
         "type": "String",
@@ -2191,7 +2008,6 @@
     "appLockDescription": "Lukitse sovellus kun sitä ei käytetä PIN-koodin kanssa",
     "noChatsFoundHere": "Täältä ei löytynyt vielä pikakeskusteluja. Aloita uusi pikakeskustelu jonkun kanssa alla olevalla painikkeella. ⤵️",
     "space": "Tila",
-    "spaces": "Tilat",
     "checkList": "Tarkistuslista",
     "countInvited": "{count} kutsuttu",
     "@countInvited": {
@@ -2227,14 +2043,6 @@
         "type": "String",
         "placeholders": {
             "percentage": {
-                "type": "String"
-            }
-        }
-    },
-    "invitedBy": "📩 Kutsujana {user}",
-    "@invitedBy": {
-        "placeholders": {
-            "user": {
                 "type": "String"
             }
         }
@@ -2382,7 +2190,6 @@
             }
         }
     },
-    "transparent": "Läpinäkyvä",
     "incomingMessages": "Saapuvat viestit",
     "stickers": "Tarrat",
     "discover": "Tutustu",
@@ -2406,8 +2213,6 @@
         "type": "String",
         "count": {}
     },
-    "restricted": "Rajoitettu",
-    "knockRestricted": "Koputus rajoitettu",
     "goToSpace": "Siirry tilaan: {space}",
     "@goToSpace": {
         "type": "String",
@@ -2463,7 +2268,6 @@
     "doesNotSeemToBeAValidHomeserver": "Ei näytä olevan yhteensopiva kotipalvelin. Väärä URL-osoite?",
     "calculatingFileSize": "Lasketaan tiedoston kokoa...",
     "sendingAttachment": "Lähetetään liitettä...",
-    "compressVideo": "Pakataan videota...",
     "oneOfYourDevicesIsNotVerified": "Yhtä laitteistasi ei ole vahvistettu",
     "noticeChatBackupDeviceVerification": "Huomautus: Kun yhdistät kaikki laitteesi keskustelun varmuuskopiointiin, ne vahvistetaan automaattisesti.",
     "blur": "Sumeus:",
@@ -2610,15 +2414,6 @@
             }
         }
     },
-    "startedAPoll": "{username} aloitti kyselyn.",
-    "@startedAPoll": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            }
-        }
-    },
     "startPoll": "Aloita kysely",
     "endPoll": "Lopeta kysely",
     "answersVisible": "Vastaukset näkyvissä",
@@ -2649,12 +2444,6 @@
     },
     "thread": "Ketju",
     "backToMainChat": "Takaisin pääpikakeskusteluun",
-    "logs": "",
-    "signIn": "",
-    "reset": "",
-    "stickerPackName": "",
-    "createNewTag": "",
-    "versionWithNumber": "",
     "@versionWithNumber": {
         "type": "String",
         "placeholders": {
@@ -2663,45 +2452,9 @@
             }
         }
     },
-    "useAsEmoji": "",
-    "join": "",
-    "advancedConfigurations": "",
-    "signUpGreeting": "",
-    "baseUrl": "",
-    "createNewChat": "",
-    "makeModerator": "",
-    "skipChatBackup": "",
-    "tagName": "",
-    "clientWellKnownInformation": "",
-    "federationBaseUrl": "",
-    "setPowerLevelDescription": "",
-    "stickerPackNameAlreadyExists": "",
-    "matrixId": "",
-    "identityServer": "",
-    "support": "",
-    "createNewAccount": "",
-    "setPowerLevel": "",
-    "mute": "",
     "@mute": {
         "description": "This should be a very short string because there is not much space in the button!"
     },
-    "useAsSticker": "",
-    "noMoreResultsFound": "",
-    "createSticker": "",
-    "removeModeratorRights": "",
-    "addTag": "",
-    "removeAdminRights": "",
-    "owner": "",
-    "powerLevel": "",
-    "playSoundOnNotification": "",
-    "changedTheChatDescription": "",
-    "skipChatBackupWarning": "",
-    "makeAdmin": "",
-    "searchOrEnterHomeserverAddress": "",
-    "notificationRuleJitsi": "",
-    "unsetLowPriority": "",
-    "setLowPriority": "",
-    "chatSearchedUntil": "",
     "@chatSearchedUntil": {
         "type": "String",
         "placeholders": {
@@ -2709,14 +2462,5 @@
                 "type": "String"
             }
         }
-    },
-    "theProcessWasCanceled": "",
-    "saveChanges": "",
-    "newStickerPack": "",
-    "signInGreeting": "",
-    "advancedConfigs": "",
-    "removeTag": "",
-    "attribution": "",
-    "supportFluffyChat": "",
-    "changedTheChatName": ""
+    }
 }

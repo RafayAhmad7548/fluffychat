@@ -55,11 +55,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "allChats": "Tüm sohbetler",
-    "@allChats": {
-        "type": "String",
-        "placeholders": {}
-    },
     "answeredTheCall": "{senderName} aramayı yanıtladı",
     "@answeredTheCall": {
         "type": "String",
@@ -186,30 +181,6 @@
         "type": "String",
         "placeholders": {
             "username": {
-                "type": "String"
-            }
-        }
-    },
-    "changedTheChatDescriptionTo": "{username} sohbet açıklamasını değiştirdi: '{description}'",
-    "@changedTheChatDescriptionTo": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            },
-            "description": {
-                "type": "String"
-            }
-        }
-    },
-    "changedTheChatNameTo": "{username} sohbet adını değiştirdi: '{chatname}'",
-    "@changedTheChatNameTo": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            },
-            "chatname": {
                 "type": "String"
             }
         }
@@ -594,16 +565,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "device": "Aygıt",
-    "@device": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "deviceId": "Aygıt kimliği",
-    "@deviceId": {
-        "type": "String",
-        "placeholders": {}
-    },
     "devices": "Aygıtlar",
     "@devices": {
         "type": "String",
@@ -656,16 +617,6 @@
     },
     "emoteInvalid": "Geçersiz ifade kısa kodu!",
     "@emoteInvalid": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "emotePacks": "Oda için ifade paketleri",
-    "@emotePacks": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "emoteSettings": "İfade Ayarları",
-    "@emoteSettings": {
         "type": "String",
         "placeholders": {}
     },
@@ -731,16 +682,6 @@
                 "type": "String"
             }
         }
-    },
-    "fileName": "Dosya adı",
-    "@fileName": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "fluffychat": "FluffyChat",
-    "@fluffychat": {
-        "type": "String",
-        "placeholders": {}
     },
     "fontSize": "Yazı tipi boyutu",
     "@fontSize": {
@@ -813,18 +754,8 @@
         "type": "String",
         "placeholders": {}
     },
-    "hideRedactedEvents": "Düzenlenmiş etkinlikleri gizle",
-    "@hideRedactedEvents": {
-        "type": "String",
-        "placeholders": {}
-    },
     "hideUnknownEvents": "Bilinmeyen etkinlikleri gizle",
     "@hideUnknownEvents": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "id": "Kimlik",
-    "@id": {
         "type": "String",
         "placeholders": {}
     },
@@ -1036,11 +967,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "needPantalaimonWarning": "Uçtan uca şifreleme kullanmak için şimdilik Pantalaimon'a ihtiyacınız olduğunu lütfen unutmayın.",
-    "@needPantalaimonWarning": {
-        "type": "String",
-        "placeholders": {}
-    },
     "newChat": "Yeni sohbet",
     "@newChat": {
         "type": "String",
@@ -1098,11 +1024,6 @@
             }
         }
     },
-    "none": "Yok",
-    "@none": {
-        "type": "String",
-        "placeholders": {}
-    },
     "noPasswordRecoveryDescription": "Henüz parolanızı kurtarmak için bir yol eklemediniz.",
     "@noPasswordRecoveryDescription": {
         "type": "String",
@@ -1137,18 +1058,8 @@
         "type": "String",
         "placeholders": {}
     },
-    "offline": "Çevrim dışı",
-    "@offline": {
-        "type": "String",
-        "placeholders": {}
-    },
     "ok": "Tamam",
     "@ok": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "online": "Çevrim içi",
-    "@online": {
         "type": "String",
         "placeholders": {}
     },
@@ -1217,24 +1128,10 @@
         "type": "String",
         "placeholders": {}
     },
-    "pickImage": "Bir resim seç",
-    "@pickImage": {
-        "type": "String",
-        "placeholders": {}
-    },
     "pin": "Sabitle",
     "@pin": {
         "type": "String",
         "placeholders": {}
-    },
-    "play": "{fileName} dosyasını oynat",
-    "@play": {
-        "type": "String",
-        "placeholders": {
-            "fileName": {
-                "type": "String"
-            }
-        }
     },
     "pleaseChooseAPasscode": "Lütfen bir geçiş kodu seçin",
     "@pleaseChooseAPasscode": {
@@ -1243,11 +1140,6 @@
     },
     "pleaseClickOnLink": "Lütfen e-postadaki bağlantıya tıklayın ve devam edin.",
     "@pleaseClickOnLink": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "pleaseEnter4Digits": "Lütfen 4 basamak girin veya uygulama kilidini devre dışı bırakmak için boş bırakın.",
-    "@pleaseEnter4Digits": {
         "type": "String",
         "placeholders": {}
     },
@@ -1281,18 +1173,8 @@
         "type": "String",
         "placeholders": {}
     },
-    "pushRules": "Gönderme kuralları",
-    "@pushRules": {
-        "type": "String",
-        "placeholders": {}
-    },
     "reason": "Neden",
     "@reason": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "recording": "Kaydediliyor",
-    "@recording": {
         "type": "String",
         "placeholders": {}
     },
@@ -1307,11 +1189,6 @@
     },
     "redactMessage": "Mesajı düzenle",
     "@redactMessage": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "register": "Kaydol",
-    "@register": {
         "type": "String",
         "placeholders": {}
     },
@@ -1339,15 +1216,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "removedBy": "{username} tarafından kaldırıldı",
-    "@removedBy": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            }
-        }
-    },
     "unbanFromChat": "Sohbet engelini kaldır",
     "@unbanFromChat": {
         "type": "String",
@@ -1370,11 +1238,6 @@
     },
     "reportMessage": "Mesajı bildir",
     "@reportMessage": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "requestPermission": "İzin iste",
-    "@requestPermission": {
         "type": "String",
         "placeholders": {}
     },
@@ -1530,11 +1393,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "showPassword": "Parolayı göster",
-    "@showPassword": {
-        "type": "String",
-        "placeholders": {}
-    },
     "skip": "Atla",
     "@skip": {
         "type": "String",
@@ -1599,12 +1457,6 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
-    "@title": {
-        "description": "Title for the application",
-        "type": "String",
-        "placeholders": {}
-    },
     "tooManyRequestsWarning": "Çok fazla istek. Lütfen daha sonra tekrar deneyin!",
     "@tooManyRequestsWarning": {
         "type": "String",
@@ -1612,11 +1464,6 @@
     },
     "tryToSendAgain": "Tekrar göndermeyi deneyin",
     "@tryToSendAgain": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "unavailable": "Yok",
-    "@unavailable": {
         "type": "String",
         "placeholders": {}
     },
@@ -1708,11 +1555,6 @@
             }
         }
     },
-    "username": "Kullanıcı adı",
-    "@username": {
-        "type": "String",
-        "placeholders": {}
-    },
     "userSentUnknownEvent": "{username} bir {type} etkinliği gönderdi",
     "@userSentUnknownEvent": {
         "type": "String",
@@ -1727,11 +1569,6 @@
     },
     "verified": "Doğrulandı",
     "@verified": {
-        "type": "String",
-        "placeholders": {}
-    },
-    "verify": "Doğrula",
-    "@verify": {
         "type": "String",
         "placeholders": {}
     },
@@ -1852,8 +1689,6 @@
     },
     "scanQrCode": "QR kodunu tarayın",
     "sendOnEnter": "Enter tuşu ile gönder",
-    "homeserver": "Ana sunucu",
-    "serverRequiresEmail": "Bu sunucunun kayıt için e-posta adresinizi doğrulaması gerekiyor.",
     "bundleName": "Paket adı",
     "removeFromBundle": "Bu paketten kaldır",
     "addToBundle": "Pakete ekle",
@@ -1865,11 +1700,9 @@
     "repeatPassword": "Parolayı tekrarlayın",
     "messageInfo": "Mesaj bilgileri",
     "time": "Zaman",
-    "messageType": "Mesaj Türü",
     "sender": "Gönderen",
     "openGallery": "Galeriyi aç",
     "removeFromSpace": "Alandan kaldır",
-    "start": "Başla",
     "commandHint_clearcache": "Önbelleği temizleyin",
     "@commandHint_clearcache": {
         "type": "String",
@@ -1890,7 +1723,6 @@
         "type": "String",
         "description": "Usage hint for the command /discardsession"
     },
-    "dismiss": "Kapat",
     "markAsRead": "Okundu olarak işaretle",
     "reportUser": "Kullanıcıyı bildir",
     "reactedWith": "{sender}, {reaction} ile tepki verdi",
@@ -1975,7 +1807,6 @@
     },
     "storeInAppleKeyChain": "Apple KeyChain'de sakla",
     "users": "Kullanıcılar",
-    "recoveryKey": "Kurtarma anahtarı",
     "storeInAndroidKeystore": "Android KeyStore'da sakla",
     "storeSecurlyOnThisDevice": "Bu aygıtta güvenli bir şekilde sakla",
     "countFiles": "{count} dosya",
@@ -2005,12 +1836,7 @@
     "commandHint_markasdm": "Verilen Matrix kimliği için doğrudan mesaj odası olarak işaretle",
     "whyIsThisMessageEncrypted": "Bu mesaj neden okunamıyor?",
     "noKeyForThisMessage": "Bu durum, mesaj siz bu aygıtta hesabınızda oturum açmadan önce gönderildiyse meydana gelebilir.\n\nGönderenin aygıtınızı engellemiş olması veya internet bağlantısında bir sorun olması da mümkündür.\n\nMesajı başka bir oturumda okuyabiliyor musunuz? O zaman mesajı oradan aktarabilirsiniz! Ayarlar > Aygıtlar bölümüne gidin ve aygıtlarınızın birbirini doğruladığından emin olun. Odayı bir sonraki sefer açtığınızda ve her iki oturum da ön planda olduğunda, anahtarlar otomatik olarak iletilecektir.\n\nOturumu kapatırken veya aygıt değiştirirken anahtarları kaybetmek istemiyor musunuz? Ayarlarda sohbet yedeklemesini etkinleştirdiğinizden emin olun.",
-    "screenSharingTitle": "ekran paylaşımı",
-    "allSpaces": "Tüm alanlar",
-    "foregroundServiceRunning": "Bu bildirim, ön plan hizmeti çalışırken görünür.",
-    "newGroup": "Yeni grup",
     "newSpace": "Yeni alan",
-    "screenSharingDetail": "Ekranınızı FuffyChat'te paylaşıyorsunuz",
     "doNotShowAgain": "Tekrar gösterme",
     "googlyEyesContent": "{senderName} size şaşkın gözler gönderiyor",
     "@googlyEyesContent": {
@@ -2055,7 +1881,6 @@
     "encryptThisChat": "Bu sohbeti şifrele",
     "disableEncryptionWarning": "Güvenlik nedeniyle, daha önce etkinleştirildiği bir sohbette şifrelemeyi devre dışı bırakamazsınız.",
     "sorryThatsNotPossible": "Üzgünüm... bu mümkün değil",
-    "deviceKeys": "Aygıt anahtarları:",
     "reopenChat": "Sohbeti yeniden aç",
     "noBackupWarning": "Uyarı! Sohbet yedeklemesini etkinleştirmezseniz, şifrelenen mesajlarınıza erişiminizi kaybedersiniz. Oturumu kapatmadan önce sohbet yedeklemesini etkinleştirmeniz önemle tavsiye edilir.",
     "noOtherDevicesFound": "Başka aygıt bulunamadı",
@@ -2117,7 +1942,6 @@
     },
     "setChatDescription": "Sohbet açıklamasını ayarla",
     "chatDescriptionHasBeenChanged": "Sohbet açıklaması değişti",
-    "directChat": "Doğrudan sohbet",
     "inviteGroupChat": "📨 Grup sohbetine davet et",
     "emoteKeyboardNoRecents": "Son kullanılan ifadeler burada görünecek...",
     "@emoteKeyboardNoRecents": {
@@ -2308,7 +2132,6 @@
             }
         }
     },
-    "transparent": "Şeffaf",
     "discover": "Keşfet",
     "incomingMessages": "Gelen mesajlar",
     "verifyOtherUserDescription": "Başka bir kullanıcıyı doğrularsanız, gerçekten kime yazdığınızı bildiğinizden emin olabilirsiniz. 💪\n\nBir doğrulama başlattığınızda, siz ve diğer kullanıcı uygulamada bir açılır pencere görecektir. Orada birbirinizle karşılaştırmanız gereken bir dizi emoji veya sayı göreceksiniz.\n\nBunu yapmanın en iyi yolu buluşmak veya bir görüntülü arama başlatmaktır. 👭",
@@ -2337,13 +2160,7 @@
     "searchMore": "Daha fazla ara...",
     "gallery": "Galeri",
     "files": "Dosyalar",
-    "knockRestricted": "Tıklatma kısıtlı",
-    "restricted": "Kısıtlı",
     "swipeRightToLeftToReply": "Yanıtlamak için sağdan sola kaydır",
-    "alwaysUse24HourFormat": "false",
-    "@alwaysUse24HourFormat": {
-        "description": "Set to true to always display time of day in 24 hour format."
-    },
     "noMoreChatsFound": "Başka sohbet bulunamadı...",
     "goToSpace": "Alana git: {space}",
     "@goToSpace": {
@@ -2353,7 +2170,6 @@
     "unread": "Okunmadı",
     "markAsUnread": "Okunmadı olarak işaretle",
     "space": "Alan",
-    "spaces": "Alanlar",
     "inviteOtherUsers": "Diğer kullanıcıları bu sohbete davet et",
     "changeTheChatPermissions": "Sohbet izinlerini değiştir",
     "changeTheCanonicalRoomAlias": "Ana herkese açık sohbet adresini değiştir",
@@ -2388,14 +2204,6 @@
     },
     "changeGeneralChatSettings": "Genel sohbet ayarlarını değiştir",
     "changeTheVisibilityOfChatHistory": "Sohbet geçmişinin görünürlüğünü değiştir",
-    "invitedBy": "📩 {user} davet etti",
-    "@invitedBy": {
-        "placeholders": {
-            "user": {
-                "type": "String"
-            }
-        }
-    },
     "chatPermissionsDescription": "Bu sohbette belirli eylemler için hangi güç düzeyinin gerekli olduğunu tanımlayın. 0, 50 ve 100 güç düzeyleri genellikle kullanıcıları, moderatörleri ve yöneticileri temsil eder, ancak herhangi bir derecelendirme mümkündür.",
     "changelog": "Değişiklik günlüğü",
     "updateInstalled": "🎉 Güncelleme {version} kuruldu!",
@@ -2413,7 +2221,6 @@
     "doesNotSeemToBeAValidHomeserver": "Uyumlu bir ana sunucu gibi görünmüyor. Yanlış URL mi?",
     "calculatingFileSize": "Dosya boyutu hesaplanıyor...",
     "sendingAttachment": "Ek gönderiliyor...",
-    "compressVideo": "Video sıkıştırılıyor...",
     "oneOfYourDevicesIsNotVerified": "Aygıtlarınızdan biri doğrulanmadı",
     "noticeChatBackupDeviceVerification": "Not: Tüm aygıtlarınızı sohbet yedeklemesine bağladığınızda, otomatik olarak doğrulanırlar.",
     "blur": "Blur:",
@@ -2455,8 +2262,6 @@
             }
         }
     },
-    "welcomeText": "Hey Hey 👋 Karşınızda FluffyChat. https://matrix.org ile uyumlu herhangi bir homeserver'a giriş yapabilirsiniz. Ve herkesle konuşabilirsiniz. Bu koca bir merkeziyetsiz mesajlaşma ağı!",
-    "ignoreUser": "Kullanıcıyı yok say",
     "commandHint_roomupgrade": "Bu odayı belirtilen oda sürümüne yükseltin",
     "checkList": "Kontrol listesi",
     "countInvited": "{count} davet edildi",
@@ -2477,33 +2282,6 @@
             }
         }
     },
-    "answersVisible": "",
-    "notificationRuleInviteForMeDescription": "",
-    "notificationRuleMemberEventDescription": "",
-    "notificationRuleMaster": "",
-    "shareKeysWithDescription": "",
-    "logs": "",
-    "signIn": "",
-    "notificationRuleEncryptedRoomOneToOneDescription": "",
-    "pollQuestion": "",
-    "enterNewChat": "",
-    "reset": "",
-    "otherNotificationSettings": "",
-    "thread": "",
-    "notificationRuleRoomOneToOneDescription": "",
-    "poll": "",
-    "stickerPackName": "",
-    "notificationRuleIsRoomMentionDescription": "",
-    "deletePushRuleCanNotBeUndone": "",
-    "youHaveKnocked": "",
-    "verifiedDevicesOnly": "",
-    "notificationRuleSuppressNoticesDescription": "",
-    "createNewTag": "",
-    "optionalMessage": "",
-    "allDevices": "",
-    "notificationRuleRoomServerAcl": "",
-    "notificationRuleIsUserMention": "",
-    "countReplies": "",
     "@countReplies": {
         "type": "int",
         "placeholders": {
@@ -2512,7 +2290,6 @@
             }
         }
     },
-    "versionWithNumber": "",
     "@versionWithNumber": {
         "type": "String",
         "placeholders": {
@@ -2521,11 +2298,6 @@
             }
         }
     },
-    "useAsEmoji": "",
-    "join": "",
-    "shareKeysWith": "",
-    "takeAPhoto": "",
-    "countChats": "",
     "@countChats": {
         "type": "String",
         "placeholders": {
@@ -2534,25 +2306,6 @@
             }
         }
     },
-    "notificationRuleIsUserMentionDescription": "",
-    "notificationRuleServerAcl": "",
-    "advancedConfigurations": "",
-    "signUpGreeting": "",
-    "notificationRuleCall": "",
-    "baseUrl": "",
-    "pause": "",
-    "allowMultipleAnswers": "",
-    "answersWillBeVisibleWhenPollHasEnded": "",
-    "notificationRuleContainsDisplayNameDescription": "",
-    "createNewChat": "",
-    "backToMainChat": "",
-    "makeModerator": "",
-    "addAnswerOption": "",
-    "skipChatBackup": "",
-    "notificationRuleEncryptedDescription": "",
-    "answerOption": "",
-    "notificationRuleRoomOneToOne": "",
-    "sentVoiceMessage": "",
     "@sentVoiceMessage": {
         "type": "String",
         "placeholders": {
@@ -2564,52 +2317,9 @@
             }
         }
     },
-    "appWantsToUseForLoginDescription": "",
-    "customReaction": "",
-    "notificationRuleEncryptedRoomOneToOne": "",
-    "displayNavigationRail": "",
-    "tagName": "",
-    "moreEvents": "",
-    "resume": "",
-    "commandHint_logoutall": "",
-    "clientWellKnownInformation": "",
-    "notificationRuleIsRoomMention": "",
-    "federationBaseUrl": "",
-    "userSpecificNotificationSettings": "",
-    "notSupportedOnThisDevice": "",
-    "setPowerLevelDescription": "",
-    "notificationRuleRoomnotif": "",
-    "noMessagesYet": "",
-    "stickerPackNameAlreadyExists": "",
-    "matrixId": "",
-    "identityServer": "",
-    "support": "",
-    "notificationRuleMessageDescription": "",
-    "createNewAccount": "",
-    "setPowerLevel": "",
-    "notificationRuleServerAclDescription": "",
-    "pollHasBeenEnded": "",
-    "replyInThread": "",
-    "mute": "",
     "@mute": {
         "description": "This should be a very short string because there is not much space in the button!"
     },
-    "notificationRuleSuppressEdits": "",
-    "pleaseWaitUntilInvited": "",
-    "useAsSticker": "",
-    "noMoreResultsFound": "",
-    "longPressToRecordVoiceMessage": "",
-    "createSticker": "",
-    "notificationRuleMessage": "",
-    "notificationRuleTombstone": "",
-    "removeModeratorRights": "",
-    "contentNotificationSettings": "",
-    "addTag": "",
-    "previous": "",
-    "startPoll": "",
-    "notificationRuleRoomServerAclDescription": "",
-    "notificationRuleInviteForMe": "",
-    "spaceMemberOfCanKnock": "",
     "@spaceMemberOfCanKnock": {
         "type": "String",
         "placeholders": {
@@ -2618,24 +2328,6 @@
             }
         }
     },
-    "removeAdminRights": "",
-    "removeFromSpaceDescription": "",
-    "newChatRequest": "",
-    "owner": "",
-    "powerLevel": "",
-    "playSoundOnNotification": "",
-    "changedTheChatDescription": "",
-    "skipChatBackupWarning": "",
-    "makeAdmin": "",
-    "more": "",
-    "searchOrEnterHomeserverAddress": "",
-    "notificationRuleSuppressEditsDescription": "",
-    "notificationRuleJitsi": "",
-    "unsetLowPriority": "",
-    "setLowPriority": "",
-    "notificationRuleContainsUserName": "",
-    "notificationRuleSuppressNotices": "",
-    "chatSearchedUntil": "",
     "@chatSearchedUntil": {
         "type": "String",
         "placeholders": {
@@ -2644,15 +2336,6 @@
             }
         }
     },
-    "notificationRuleMasterDescription": "",
-    "open": "",
-    "notificationRuleTombstoneDescription": "",
-    "notificationRuleContainsUserNameDescription": "",
-    "notificationRuleContainsDisplayName": "",
-    "notificationRuleReaction": "",
-    "endPoll": "",
-    "theProcessWasCanceled": "",
-    "unknownPushRule": "",
     "@unknownPushRule": {
         "type": "String",
         "placeholders": {
@@ -2661,21 +2344,6 @@
             }
         }
     },
-    "crossVerifiedDevices": "",
-    "saveChanges": "",
-    "commandHint_logout": "",
-    "newStickerPack": "",
-    "signInGreeting": "",
-    "advancedConfigs": "",
-    "notificationRuleMemberEvent": "",
-    "crossVerifiedDevicesIfEnabled": "",
-    "waitingForServer": "",
-    "declineInvitation": "",
-    "roomNotificationSettings": "",
-    "otherPartyNotLoggedIn": "",
-    "notificationRuleReactionDescription": "",
-    "notificationRuleCallDescription": "",
-    "appWantsToUseForLogin": "",
     "@appWantsToUseForLogin": {
         "type": "String",
         "placeholders": {
@@ -2684,9 +2352,6 @@
             }
         }
     },
-    "recordAVideo": "",
-    "removeTag": "",
-    "countVotes": "",
     "@countVotes": {
         "type": "int",
         "placeholders": {
@@ -2695,24 +2360,6 @@
             }
         }
     },
-    "notificationRuleJitsiDescription": "",
-    "attribution": "",
-    "approve": "",
-    "notificationRuleRoomnotifDescription": "",
-    "generalNotificationSettings": "",
-    "supportFluffyChat": "",
-    "startedAPoll": "",
-    "@startedAPoll": {
-        "type": "String",
-        "placeholders": {
-            "username": {
-                "type": "String"
-            }
-        }
-    },
-    "notificationRuleEncrypted": "",
-    "changedTheChatName": "",
-    "spaceMemberOf": "",
     "@spaceMemberOf": {
         "type": "String",
         "placeholders": {

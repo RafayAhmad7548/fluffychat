@@ -14,7 +14,7 @@ jobs:
   deploy_web:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with:
           flutter-version-file: .tool_versions.yaml
@@ -37,8 +37,11 @@ jobs:
 
   deploy_playstore_internal:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy_playstore
+      queue: max
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with:
           flutter-version-file: .tool_versions.yaml
