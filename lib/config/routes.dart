@@ -110,8 +110,11 @@ abstract class AppRoutes {
     GoRoute(
       path: '/backup',
       redirect: loggedOutRedirect,
-      pageBuilder: (context, state) =>
-          defaultPageBuilder(context, state, BootstrapPage()),
+      pageBuilder: (context, state) => defaultPageBuilder(
+        context,
+        state,
+        BootstrapPage(reset: state.uri.queryParameters['reset'] == 'true'),
+      ),
     ),
     ShellRoute(
       // Never use a transition on the shell route. Changing the PageBuilder
@@ -161,6 +164,7 @@ abstract class AppRoutes {
                     ChatPage(
                       roomId: state.pathParameters['roomid']!,
                       eventId: state.uri.queryParameters['event'],
+                      timeline: state.extra as Timeline?,
                     ),
                   ),
                   redirect: loggedOutRedirect,

@@ -11,6 +11,7 @@ import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/notification_background_handler.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/utils/start_push_foreground_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -57,19 +58,24 @@ void main(List<String> args) async {
   final store = await AppSettings.init();
   Logs().i('Welcome to ${AppSettings.applicationName.value} <3');
 
+  kEnableMatrixSdkBenchmarks = AppSettings.benchmarksInLogs.value;
+
   if (!_vodozemacInitialized) {
     await vod.init(wasmPath: './assets/assets/vodozemac/');
     _vodozemacInitialized = true;
   }
 
   Logs().nativeColors = !PlatformInfos.isIOS;
-  final clients = await ClientManager.getClients(store: store);
 
   // If the app starts in detached mode, we assume that it is in
   // background fetch mode for processing push notifications. This is
   // currently only supported on Android.
   if (PlatformInfos.isAndroid &&
       AppLifecycleState.detached == WidgetsBinding.instance.lifecycleState) {
+    await ForegroundServices.startService('background_push');
+
+    final clients = await ClientManager.getClients(store: store);
+
     // Do not send online presences when app is in background fetch mode.
     for (final client in clients) {
       client.backgroundSync = false;
@@ -94,6 +100,7 @@ void main(List<String> args) async {
       windows: true,
     );
   }
+  final clients = await ClientManager.getClients(store: store);
 
   // Started in foreground mode.
   Logs().i(
@@ -106,11 +113,17 @@ void main(List<String> args) async {
 Future<void> startGui(List<Client> clients, SharedPreferences store) async {
   // Fetch the pin for the applock if existing for mobile applications.
   String? pin;
-  if (PlatformInfos.isMobile) {
+  var useBiometrics = false;
+  if (PlatformInfos.supportsAppLock) {
     try {
       pin = await const FlutterSecureStorage().read(
         key: 'chat.fluffy.app_lock',
       );
+      useBiometrics =
+          (await const FlutterSecureStorage().read(
+            key: 'chat.fluffy.use_biometrics',
+          )) ==
+          'true';
     } catch (e, s) {
       Logs().d('Unable to read PIN from Secure storage', e, s);
     }
@@ -121,7 +134,13 @@ Future<void> startGui(List<Client> clients, SharedPreferences store) async {
   await firstClient?.roomsLoading;
   await firstClient?.accountDataLoading;
 
-  runApp(FluffyChatApp(clients: clients, pincode: pin, store: store));
+  runApp(
+    FluffyChatApp(
+      clients: clients,
+      appLockSettings: (pincode: pin, useBiometrics: useBiometrics),
+      store: store,
+    ),
+  );
 }
 
 /// Watches the lifecycle changes to start the application when it

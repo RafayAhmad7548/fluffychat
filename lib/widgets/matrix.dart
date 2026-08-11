@@ -21,7 +21,6 @@ import 'package:fluffychat/widgets/future_loading_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_media_kit/just_audio_media_kit.dart';
@@ -63,14 +62,12 @@ class Matrix extends StatefulWidget {
       Provider.of<MatrixState>(context, listen: false);
 }
 
-class MatrixState extends State<Matrix> with WidgetsBindingObserver {
+class MatrixState extends State<Matrix> {
   int _activeClient = -1;
   String? activeBundle;
 
-  XFile? loginAvatar;
+  SharedPreferences get store => widget.store;
 
-  String? loginUsername;
-  bool? loginRegistrationSupported;
   BackgroundPush? backgroundPush;
 
   VoipPlugin? voipPlugin;
@@ -80,6 +77,21 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   RequestTokenResponse? currentThreepidCreds;
 
   Client? _loginClientCandidate;
+  bool get isMultiAccount => widget.clients.length > 1;
+
+  int getClientIndexByMatrixId(String matrixId) =>
+      widget.clients.indexWhere((client) => client.userID == matrixId);
+
+  void setActiveClient(Client? cl) {
+    final i = widget.clients.indexWhere((c) => c == cl);
+    if (i != -1) {
+      _activeClient = i;
+      // TODO: Multi-client VoiP support
+      createVoipPlugin();
+    } else {
+      Logs().w('Tried to set an unknown client ${cl!.userID} as active');
+    }
+  }
 
   AudioPlayer? audioPlayer;
 
@@ -101,7 +113,8 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   final Map<String, int> linuxNotificationIds = {};
 
   Map<String?, List<Client?>> get accountBundles {
-    final resBundles = <String?, List<_AccountBundleWithClient>>{};
+    final resBundles =
+        <String?, List<({Client? client, AccountBundle? bundle})>>{};
     for (var i = 0; i < widget.clients.length; i++) {
       final bundles = widget.clients[i].accountBundles;
       for (final bundle in bundles) {
@@ -109,9 +122,10 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
           continue;
         }
         resBundles[bundle.name] ??= [];
-        resBundles[bundle.name]!.add(
-          _AccountBundleWithClient(client: widget.clients[i], bundle: bundle),
-        );
+        resBundles[bundle.name]!.add((
+          client: widget.clients[i],
+          bundle: bundle,
+        ));
       }
     }
     for (final b in resBundles.values) {
@@ -156,15 +170,10 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   }
 
   bool get hasComplexBundles => accountBundles.values.any((v) => v.length > 1);
-  bool get isMultiAccount => widget.clients.length > 1;
 
-  SharedPreferences get store => widget.store;
 
   Client? getClientByName(String name) =>
       widget.clients.firstWhereOrNull((c) => c.clientName == name);
-
-  int getClientIndexByMatrixId(String matrixId) =>
-      widget.clients.indexWhere((client) => client.userID == matrixId);
 
   Future<Client> getLoginClient() async {
     if (widget.clients.isNotEmpty && !client.isLogged()) {
@@ -204,24 +213,15 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     if (PlatformInfos.isLinux || PlatformInfos.isWindows) {
       JustAudioMediaKit.ensureInitialized();
       JustAudioMediaKit.title = AppSettings.applicationName.value;
     }
+    _listener = AppLifecycleListener(onStateChange: didChangeAppLifecycleState);
     initMatrix();
   }
 
-  void setActiveClient(Client? cl) {
-    final i = widget.clients.indexWhere((c) => c == cl);
-    if (i != -1) {
-      _activeClient = i;
-      // TODO: Multi-client VoiP support
-      createVoipPlugin();
-    } else {
-      Logs().w('Tried to set an unknown client ${cl!.userID} as active');
-    }
-  }
+  AppLifecycleListener? _listener;
 
   void _registerSubs(String name) {
     final c = getClientByName(name);
@@ -374,7 +374,6 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     voipPlugin = VoipPlugin(this);
   }
 
-  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final foreground =
         state != AppLifecycleState.inactive &&
@@ -393,12 +392,30 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    _listener?.dispose();
 
-    onRoomKeyRequestSub.values.map((s) => s.cancel());
-    onKeyVerificationRequestSub.values.map((s) => s.cancel());
-    onLogoutSub.values.map((s) => s.cancel());
-    onNotification.values.map((s) => s.cancel());
+    for (final sub in onRoomKeyRequestSub.values) {
+      sub.cancel();
+    }
+    for (final sub in onKeyVerificationRequestSub.values) {
+      sub.cancel();
+    }
+    for (final sub in onLogoutSub.values) {
+      sub.cancel();
+    }
+    for (final sub in onNotification.values) {
+      sub.cancel();
+    }
+    for (final sub in onUiaRequest.values) {
+      sub.cancel();
+    }
+    onRoomKeyRequestSub.clear();
+    onKeyVerificationRequestSub.clear();
+    onLogoutSub.clear();
+    onNotification.clear();
+    onUiaRequest.clear();
+
+    voiceMessageEventId.dispose();
 
     super.dispose();
   }
@@ -436,11 +453,4 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     if (!context.mounted) return;
     file.save(context);
   }
-}
-
-class _AccountBundleWithClient {
-  final Client? client;
-  final AccountBundle? bundle;
-
-  _AccountBundleWithClient({this.client, this.bundle});
 }
