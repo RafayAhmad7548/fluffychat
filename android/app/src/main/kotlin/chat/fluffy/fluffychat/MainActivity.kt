@@ -4,6 +4,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 
 import android.content.Context
+import android.os.Bundle
 
 class MainActivity : FlutterFragmentActivity() {
 
@@ -18,6 +19,12 @@ class MainActivity : FlutterFragmentActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         // do nothing, because the engine was been configured in provideEngine
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setShowWhenLocked(true)
+        setTurnScreenOn(true)
     }
 
     companion object {

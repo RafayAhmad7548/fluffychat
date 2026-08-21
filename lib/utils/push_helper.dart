@@ -390,6 +390,12 @@ Future<void> _tryPushHelper(
       flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
     );
   }
+
+  if (isCallNotification && AppLifecycleState.detached == WidgetsBinding.instance.lifecycleState) {
+    Logs().v('Push helper diposing client');
+    await client.dispose(closeDatabase: true);
+  }
+
   Logs().v('Push helper has been completed!');
 }
 
